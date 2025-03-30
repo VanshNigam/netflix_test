@@ -1,35 +1,20 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
-import { useEffect, useState } from "react";
-import { API_OPTIONS } from "../utils/constants";
-import { addTrailerVideo } from "../utils/movieSlice";
+import { MOVIES_STATES } from "../utils/movieSlice";
+import { STATES } from "../utils/appStore";
 
 const VideoBackground = ({ movieId }) => {
-  const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
-  const dispatch = useDispatch();
-  const [trailer, setTrailer] = useState(null);
-  // useMovieTrailer(movieId);
-  useEffect(() => {
-      const getMovieVideos = async () => {
-        const data = await fetch(
-          "https://api.themoviedb.org/3/movie/" +
-            movieId +
-            "/videos?language=en-US",
-          API_OPTIONS
-        );
-        const json = await data.json();
-        console.log("Fetched Data:", json); // ✅ Check API response
-    
-        const filterData = json.results.filter((video) => video.type === "Trailer");
-        const trailer = filterData.length ? filterData[0] : json.results[0];
-  
-        console.log("Trailer Video:", trailer);  // ✅ Check trailer video ID
-        setTrailer(trailer);  // ✅ Store trailer video ID in Redux state
-        dispatch(addTrailerVideo(trailer));
-      };
-      getMovieVideos();
-      console.log("-------",trailer);
-    }, []);
+  // typo tha
+  // before = store.movies.trailerVideo
+  // after = store.movie.trailerVideo
+  const DEBUG = false;
+
+  const trailer = useSelector(
+    (store) => store[STATES.MOVIE][MOVIES_STATES.TRAILER_VIDEO]
+  );
+  DEBUG && console.log("trailer", trailer);
+
+  useMovieTrailer(movieId);
 
   if (!trailer) return <div>No trailerVideo</div>; // Handle loading state
 
@@ -39,7 +24,7 @@ const VideoBackground = ({ movieId }) => {
         className="w-screen aspect-video"
         src={
           "https://www.youtube.com/embed/" +
-          trailerVideo?.key +
+          trailer?.key +
           "?&autoplay=1&mute=1"
         }
         title="YouTube video player"
