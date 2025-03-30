@@ -9,7 +9,7 @@ const Browse = () => {
   return (
     <div>
       <Header />
-      <div>Browse</div>
+      {/* <div>Browse</div> */}
       <MainContainer />
       <SecondaryContainer />
     </div>

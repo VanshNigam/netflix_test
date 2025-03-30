@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { BACK_GROUND } from "../utils/constants.js";
 
 const Login = () => {
-  const DEBUG = true;
+  const DEBUG = false;
 
   const [isSignInForm, setisSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
