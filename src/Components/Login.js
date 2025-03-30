@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { BACK_GROUND } from "../utils/constants.js";
 
 const Login = () => {
+  const DEBUG = true;
+
   const [isSignInForm, setisSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const Login = () => {
   const password = useRef(null);
 
   const handleButtonclick = () => {
+    DEBUG && navigate("/browser");
     const message = checkValidData(
       email?.current?.value,
       password?.current?.value
@@ -79,7 +82,14 @@ const Login = () => {
           const user = userCredential.user;
           console.log("User signed in", user);
 
-          dispatch(addUser({ uid: user.uid, email: user.email, displayName: user.displayName, photoURL: user.photoURL }));
+          dispatch(
+            addUser({
+              uid: user.uid,
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+            })
+          );
 
           navigate("/Browser");
         })
@@ -115,10 +125,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src={BACK_GROUND}
-          alt="back"
-        />
+        <img src={BACK_GROUND} alt="back" />
       </div>
       <form className="absolute p-12 text-white bg-black bg-opacity-80 w-3/12 my-36 mx-auto right-0 left-0 py-6 rounded-2xl ">
         <h1 className="font-bold text-3xl">

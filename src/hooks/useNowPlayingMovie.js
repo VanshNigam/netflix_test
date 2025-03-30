@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addNowPlayingMovies } from "../utils/movieSlice";
 
 const useNowPlayingMovies = () => {
+  const DEBUG = false;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,7 +15,7 @@ const useNowPlayingMovies = () => {
           API_OPTIONS
         );
         const data = await response.json();
-        console.log("Fetched Data:", data); // ✅ Check API response
+        DEBUG && console.log("Fetched Data:", data); // ✅ Check API response
         dispatch(addNowPlayingMovies(data));
       } catch (error) {
         console.error("Error fetching movies:", error);
